@@ -3,15 +3,14 @@ using System.Collections.Generic;
 
 class Program
 {
-    static char[,] intersection = {
-        { ' ', ' ', 'N', ' ', ' ' },
-        { ' ', '|', '|', '|', ' ' },
-        { 'W', '-', '+', '-', 'E' },
-        { ' ', '|', '|', '|', ' ' },
-        { ' ', ' ', 'S', ' ', ' ' }
+    static int laneSize = 5;
+    static Dictionary<char, Queue<Car>> lanes = new Dictionary<char, Queue<Car>>()
+    {
+        { 'N', new Queue<Car>() },
+        { 'S', new Queue<Car>() },
+        { 'E', new Queue<Car>() },
+        { 'W', new Queue<Car>() }
     };
-
-    static List<Car> cars = new List<Car>();
 
     class Car
     {
@@ -25,33 +24,34 @@ class Program
         }
     }
 
-    static void AddCar(char from, char to)
+    static void AddCar(char from, char to, string lightDirection)
     {
         if (from == to)
         {
-            Console.WriteLine("Błąd: Samochód nie może jechać w kierunku, z którego przyjechał.");
+            Console.WriteLine("Error: A car cannot go to the direction it came from.");
             return;
         }
 
-        cars.Add(new Car(from, to));
+        if (lanes[from].Count < laneSize)
+            lanes[from].Enqueue(new Car(from, to));
+
+        DrawIntersection();
+        MoveCars(lightDirection);
+        DrawIntersection();
     }
 
     static void MoveCars(string lightDirection)
     {
-        if (cars.Count == 0)
+        foreach (var dir in lanes.Keys)
         {
-            Console.WriteLine("Brak samochodów na skrzyżowaniu.");
-            return;
-        }
+            if (lanes[dir].Count == 0) continue;
 
-        for (int i = 0; i < cars.Count; i++)
-        {
-            Car car = cars[i];
+            char to = lanes[dir].Peek().To;
 
-            if ((lightDirection == "NS" && (car.From == 'N' || car.From == 'S')) ||
-                (lightDirection == "EW" && (car.From == 'E' || car.From == 'W')))
+            if ((lightDirection == "NS" && (dir == 'N' || dir == 'S')) ||
+                (lightDirection == "EW" && (dir == 'E' || dir == 'W')))
             {
-                cars.RemoveAt(i);
+                lanes[dir].Dequeue();
                 break;
             }
         }
@@ -59,69 +59,78 @@ class Program
 
     static void DrawIntersection()
     {
-        char[,] display = (char[,])intersection.Clone();
+        Console.Clear();
+        string[] north = GetLaneVertical('N');
+        string[] south = GetLaneVertical('S');
+        string west = GetLaneHorizontal('W');
+        string east = GetLaneHorizontal('E');
 
-        foreach (var car in cars)
+        string[] layout = {
+            $"    {north[0]}     ",
+            $"    {north[1]}     ",
+            $"    {north[2]}     ",
+            $"    {north[3]}     ",
+            $"    {north[4]}     ",
+            "    | | |    ",
+            $"{west} --- + --- {east}",
+            "    | | |    ",
+            $"    {south[0]}     ",
+            $"    {south[1]}     ",
+            $"    {south[2]}     ",
+            $"    {south[3]}     ",
+            $"    {south[4]}     "
+        };
+
+        foreach (var line in layout)
+            Console.WriteLine(line);
+    }
+
+    static string[] GetLaneVertical(char dir)
+    {
+        Queue<Car> lane = lanes[dir];
+        string[] road = new string[laneSize];
+        Array.Fill(road, " ");
+
+        int i = 0;
+        foreach (var car in lane)
         {
-            switch (car.From)
-            {
-                case 'N': display[1, 2] = 'A'; break;
-                case 'S': display[3, 2] = 'A'; break;
-                case 'E': display[2, 3] = 'A'; break;
-                case 'W': display[2, 1] = 'A'; break;
-            }
+            if (i >= laneSize) break;
+            road[i] = car.From.ToString();
+            i++;
         }
 
-        for (int i = 0; i < display.GetLength(0); i++)
+        return road;
+    }
+
+    static string GetLaneHorizontal(char dir)
+    {
+        Queue<Car> lane = lanes[dir];
+        char[] road = new char[laneSize];
+        Array.Fill(road, ' ');
+
+        int i = 0;
+        foreach (var car in lane)
         {
-            for (int j = 0; j < display.GetLength(1); j++)
-            {
-                Console.Write(display[i, j]);
-            }
-            Console.WriteLine();
+            if (i >= laneSize) break;
+            road[i] = car.From;
+            i++;
         }
+
+        return new string(road);
     }
 
     static void Main()
     {
         while (true)
         {
-            Console.Clear();
-            DrawIntersection();
+            Console.Write("\nEnter car (from to lightDirection), e.g., N E NS (or type EXIT): ");
+            string input = Console.ReadLine();
 
-            Console.WriteLine("\n1. Dodaj auto (np. N S)");
-            Console.WriteLine("2. Zmień światła (NS / EW)");
-            Console.WriteLine("3. Przejedź auto");
-            Console.WriteLine("4. Wyjście");
-            Console.Write("\nWybór: ");
+            if (input.ToUpper() == "EXIT") break;
 
-            string choice = Console.ReadLine();
-
-            if (choice == "1")
-            {
-                Console.Write("Podaj skąd (N/E/S/W) i dokąd (N/E/S/W): ");
-                string[] input = Console.ReadLine().Split();
-                if (input.Length == 2)
-                    AddCar(input[0][0], input[1][0]);
-            }
-            else if (choice == "2")
-            {
-                Console.Write("Podaj światła (NS / EW): ");
-                string lights = Console.ReadLine();
-                if (lights == "NS" || lights == "EW")
-                    MoveCars(lights);
-            }
-            else if (choice == "3")
-            {
-                Console.Write("Podaj światła (NS / EW): ");
-                string lights = Console.ReadLine();
-                MoveCars(lights);
-            }
-            else if (choice == "4")
-            {
-                break;
-            }
+            string[] parts = input.Split();
+            if (parts.Length == 3)
+                AddCar(parts[0][0], parts[1][0], parts[2]);
         }
     }
 }
-
