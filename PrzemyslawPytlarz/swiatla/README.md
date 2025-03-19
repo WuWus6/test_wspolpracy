@@ -48,8 +48,8 @@ class Program
 
             char to = lanes[dir].Peek().To;
 
-            if ((lightDirection == "NS" && (dir == 'N' || dir == 'S')) ||
-                (lightDirection == "EW" && (dir == 'E' || dir == 'W')))
+            if (((lightDirection == "NS" || lightDirection == "SN") && (dir == 'N' || dir == 'S')) ||
+                ((lightDirection == "EW" || lightDirection == "WE") && (dir == 'E' || dir == 'W')))
             {
                 lanes[dir].Dequeue();
                 break;
@@ -66,19 +66,19 @@ class Program
         string east = GetLaneHorizontal('E');
 
         string[] layout = {
-            $"    {north[0]}     ",
-            $"    {north[1]}     ",
-            $"    {north[2]}     ",
-            $"    {north[3]}     ",
-            $"    {north[4]}     ",
-            "    | | |    ",
-            $"{west} --- + --- {east}",
-            "    | | |    ",
-            $"    {south[0]}     ",
-            $"    {south[1]}     ",
-            $"    {south[2]}     ",
-            $"    {south[3]}     ",
-            $"    {south[4]}     "
+            $"        [N]\n",
+            $"         {north[4]}     ",
+            $"         {north[3]}     ",
+            $"         {north[2]}     ",
+            $"         {north[1]}     ",
+            $"         {north[0]}     ",
+            $"[W] {west[4]}{west[3]}{west[2]}{west[1]}{west[0]}+{east[0]}{east[1]}{east[2]}{east[3]}{east[4]} [E]",
+            $"         {south[0]}     ",
+            $"         {south[1]}     ",
+            $"         {south[2]}     ",
+            $"         {south[3]}     ",
+            $"         {south[4]}     ",
+            $"        [S]\n",
         };
 
         foreach (var line in layout)
@@ -95,7 +95,7 @@ class Program
         foreach (var car in lane)
         {
             if (i >= laneSize) break;
-            road[i] = car.From.ToString();
+            road[i] = car.To.ToString();
             i++;
         }
 
@@ -112,7 +112,7 @@ class Program
         foreach (var car in lane)
         {
             if (i >= laneSize) break;
-            road[i] = car.From;
+            road[i] = car.To;
             i++;
         }
 
