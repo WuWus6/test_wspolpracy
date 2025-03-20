@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 class Program
 {
-    static int laneSize = 5;
+    static int laneSize = 9;
     static Dictionary<char, Queue<Car>> lanes = new Dictionary<char, Queue<Car>>()
     {
         { 'N', new Queue<Car>() },
@@ -66,19 +66,19 @@ class Program
         string east = GetLaneHorizontal('E');
 
         string[] layout = {
-            $"        [N]\n",
-            $"         {north[4]}     ",
-            $"         {north[3]}     ",
-            $"         {north[2]}     ",
-            $"         {north[1]}     ",
-            $"         {north[0]}     ",
-            $"[W] {west[4]}{west[3]}{west[2]}{west[1]}{west[0]}+{east[0]}{east[1]}{east[2]}{east[3]}{east[4]} [E]",
-            $"         {south[0]}     ",
-            $"         {south[1]}     ",
-            $"         {south[2]}     ",
-            $"         {south[3]}     ",
-            $"         {south[4]}     ",
-            $"        [S]\n",
+            $"              [N] ({lanes['N'].Count()})\n",
+            $"               {north[4]}     ",
+            $"               {north[3]}     ",
+            $"               {north[2]}     ",
+            $"               {north[1]}     ",
+            $"               {north[0]}     ",
+            $"[W]  {west[4]} {west[3]} {west[2]} {west[1]} {west[0]} + {east[0]} {east[1]} {east[2]} {east[3]} {east[4]}  [E]",
+            $"({lanes['W'].Count()})            {south[0]}            ({lanes['E'].Count()})",
+            $"               {south[1]}     ",
+            $"               {south[2]}     ",
+            $"               {south[3]}     ",
+            $"               {south[4]}     ",
+            $"              [S] ({lanes['S'].Count()})\n",
         };
 
         foreach (var line in layout)
