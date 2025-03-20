@@ -31,7 +31,7 @@ System będzie składał się z następujących modułów:
 
 <h3>4.1. Moduł symulacji wiatru</h3>
 
-- Wiatr jest losowany na początku działania systemu oraz po naciśnięciu przycisku w miejscu obrazka (strzałki) wskazującego kierunek wiatru. Wiatr, jako zmienna, przyjmuje wartość w zakresie 0-359°.
+- Wiatr jest losowany na początku działania systemu lub po naciśnięciu przycisku w miejscu obrazka (strzałki) wskazującego kierunek wiatru. Wiatr, jako zmienna, przyjmuje wartość w zakresie 0-359°.
 - Obrót strzałki kierunku wiatru uzależnione jest od wartości wiatru.
 
 
@@ -83,19 +83,19 @@ System będzie składał się z następujących modułów:
 Rotacja obliczana jest wzorem:
 - Po naciśnięciu przycisku A
 
-```rotacja = rotacja + 1 * aktualna prędkość / 2 + 1```
+```rotacja = rotacja + 1 * (aktualna prędkość) / 2 + 1```
 
 - Po naciśnięciu przycisku D
 
-```rotacja = rotacja - 1 * aktualna prędkość / 2 + 1```
+```rotacja = rotacja - 1 * (aktualna prędkość) / 2 + 1```
 
 Obrót obrazku żaglówki na ekranie może być obliczone wzorem:
 
 ```radiany rotacji = rotacja / 180 * PI```
 
-```x = x + cos(radiany rotacji) * aktualna prędkość```
+```x = x + cos(radiany rotacji) * (aktualna prędkość)```
 
-```y = y + sin(radiany rotacji) * aktualna prędkość```
+```y = y + sin(radiany rotacji) * (aktualna prędkość)```
 
 - Jeżeli łódka będzie próbować wypłynąć poza zakresy ekranu, powinna być od razu zatrzymana.
 
@@ -105,16 +105,14 @@ Obrót obrazku żaglówki na ekranie może być obliczone wzorem:
 
 **Opis:** Użytkownik chce wylosować nowy kierunek wiatru.<br>
 **Przebieg:**
-- Użytkownik uruchamia aplikacje, automatycznie losuje się kierunek wiatru, strzałka na ekranie wskazująca kierunek wiatru dopasowywuje swój obrót do aktualnego kierunku wiatru.
-- Użytkownik naciska strzałke, która wskazuje obecny kierunek wiatru.
+- W uruchomionej aplikacji użytkownik naciska strzałke, która wskazuje obecny kierunek wiatru.
 - Wiatr przyjmuje nową, losową wartość z zakresu 0-359, zmienia się kierunek strzałki wskazującej kierunek wiatru na ekranie.
 
 <h3>2. Obracanie łódki</h3>
 
 **Opis:** Użytkownik chce wylosować nowy kierunek wiatru.<br>
 **Przebieg:**
-- Użytkownik uruchamia aplikacje, automatycznie losuje się kierunek wiatru, strzałka na ekranie wskazująca kierunek wiatru dopasowywuje swój obrót do aktualnego kierunku wiatru.
-- Użytkownik naciska przycisk A lub dotyka lewej strony ekranu w przypadku urządzenia mobilnego lub naciska przycisk D lub dotyka prawej stronie ekranu w przypadku urządzenia mobilnego.
+- W uruchomionej aplikacji użytkownik naciska przycisk A lub dotyka lewej strony ekranu w przypadku urządzenia mobilnego lub naciska przycisk D lub dotyka prawej stronie ekranu w przypadku urządzenia mobilnego.
 - System oblicza rotację żaglówki zgodnie ze wzorem.
 - Żaglówka obraca się zgodnie z obliczoną rotacją.
 - System automatycznie obraca żagiel do optymalnego położenia.
@@ -124,8 +122,7 @@ Obrót obrazku żaglówki na ekranie może być obliczone wzorem:
 
 **Opis:** Użytkownik próbuje wypłynąć łódką poza granice ekranu.<br>
 **Przebieg:**
-- Użytkownik uruchamia aplikacje, automatycznie losuje się kierunek wiatru, strzałka na ekranie wskazująca kierunek wiatru dopasowywuje swój obrót do aktualnego kierunku wiatru.
-- Użytkownik steruje łódką za pomocą klawiszy A i D lub - w przypadku urządzenia mobilnego - lewą i prawą stroną ekranu tak, aby spróbować wypłynąć poza ekran.
+- W uruchomionej aplikacji użytkownik steruje łódką za pomocą klawiszy A i D lub - w przypadku urządzenia mobilnego - lewą i prawą stroną ekranu tak, aby spróbować wypłynąć poza ekran.
 - Gdy żaglówka osiąga krawędź ekranu, jej ruch jest zatrzymany, aby nie wypłynęła poza ekran.
 
 <h2>6. Technologie i ograniczenia</h2>
