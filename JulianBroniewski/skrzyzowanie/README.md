@@ -1,1 +1,1 @@
-Podaj 'T' zamiast liczby tur aby przetestować funkcję.
+Zawiera dwa projekty: aplikację konsolową i program testów do poszczególnych funkcji.
