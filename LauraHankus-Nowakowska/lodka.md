@@ -39,7 +39,18 @@ git clone https://github.com/danekkkk/lodka-mobile.git
 3. Na ekranie wyświetla się komunikat z informacją o kierunku wiatru (np. "Wiatr północno-zachodni") oraz jego prędkości w węzłach.
 4. Użytkownik może rozpocząć żeglowanie, biorąc pod uwagę aktualne warunki atmosferyczne.
 
-### Scenariusz 2: Sterowanie łódką
+### Scenariusz 2: Generowanie kierunku i prędkości wiatru (drugi przypadek)
+
+**Aktorzy**: Użytkownik\
+**Opis**: W trakcie działania aplikacji na bieżąco zmienia się kierunek i prędkość wiatru wpływające na warunki żeglugi. Użytkownik może analizować jak wpływają one na ruch łódki.\
+**Przebieg**: 
+
+1. Użytkownik otwiera aplikację.
+2. Aplikacja w trakcie gdy użytkownik rozpoczął juz żegluge, zmienia na bieżąco kierunek i prędkość wiatru.
+3. Na ekranie wyświetla się komunikat o zmianie parametrów wiatru.
+4. Użytkownik może kontyuować żeglowanie.
+
+### Scenariusz 3: Sterowanie łódką
 
 **Aktorzy**: Użytkownik\
 **Opis**: Gracz używa interfejsu lub klawiszy do sterowania łódką, zmieniając jej kurs względem wiatru. Sterowanie pozwala użytkownikowi eksperymentować z różnymi strategiami żeglowania, jednocześnie zmieniając kierunek i dostosowując prędkość łódki w czasie rzeczywistym.\
@@ -49,9 +60,11 @@ git clone https://github.com/danekkkk/lodka-mobile.git
 2. Użytkownik dotyka przycisku `>`, aby obrócić łódkę w prawo o 10°.
 3. Zmiana orientacji jest wizualizowana poprzez animację ruchu łódki.
 4. Aplikacja na bieżąco dostosowuje prędkość łódki względem do kierunku wiatru i kierunku, w którym płynie.
-5. Gdy łódka znajdzie się w martwym kącie, jej prędkość zostaje zredukowana do zera.
+5. Gdy łódka płynie z wiatrem osiąga największą prędkość (15 węzłów [ok. 25 km/h]).
+6. Im kąt żeglugi łódki jest bliżej martwego kąta, tym jej prędkość się zmniejsza.
+7. Gdy łódka znajdzie się w martwym kącie (płynie pod wiatr), jej prędkość zostaje zredukowana do zera.
 
-### Scenariusz 3: Obliczanie prędkości łódki
+### Scenariusz 4: Obliczanie prędkości łódki
 
 **Aktorzy**: Łódka\
 **Opis**: Aplikacja stale aktualizuje prędkość łódki w zależności od jej kąta względem wiatru.\
