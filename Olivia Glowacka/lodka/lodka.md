@@ -21,22 +21,22 @@ System "BoatApp" ma umożliwiać użytkownikom interaktywne sterowanie wirtualn�
 ### 4.1. Moduł symulacji żaglówki 
 **Opis:**
 - Wyświetlanie graficznej reprezentacji żaglówki na ekranie.
-- Obracanie żaglówką zgodnie z ruchem użytkownika.
-- Obliczanie prędkości żaglówki w zależności od kursu i kierunku wiatru.
+- Obracanie żaglówką zgodnie z ruchem użytkownika. Kąt kursu zmienia się w zakresie od 0° do 359° (pełen obrót).
+- Obliczanie prędkości żaglówki w zależności od kursu i kierunku wiatru, np. Prędkość = MaksymalnaPrędkość * cos(θ) (gdzie θ to różnica między kątem kursu a kierunkiem wiatru).
 
 **Dane wejściowe:**
 - Kąt obrotu żaglówki (wartość w stopniach).
-- Kierunek wiatru.
+- Kierunek wiatru (wartość w stopniach).
 
 **Dane wyjściowe:**
 - Nowa pozycja żaglówki.
-- Prędkość żaglówki.
+- Prędkość żaglówki (obliczona na podstawie kąta kursu i kierunku wiatru).
 
 ### 4.2. Moduł wiatru       
 **Opis:**
-- Generowanie losowego kierunku wiatru.
+- Generowanie losowego kierunku wiatru (w zakresie od 0° do 359°).
 - Aktualizacja wizualizacji kierunku wiatru.
-- Przeliczanie wpływu wiatru na prędkość żaglówki jachtu.
+- Przeliczanie wpływu wiatru na prędkość żaglówki jachtu, np. PrędkośćŻaglówki = Prędkość * SiłaWiatru * cos(θ) (gdzie θ to różnica między kierunkiem wiatru a kursem żaglówki).
 
 **Dane wejściowe:**
 - Wartość losowa określająca kierunek wiatru.
@@ -59,7 +59,7 @@ System "BoatApp" ma umożliwiać użytkownikom interaktywne sterowanie wirtualn�
 
 ### 4.4. Moduł interfejsu użytkownika 
 **Opis:**
-- Wyświetlanie aktualnego kursu żeglarskiego.
+- Wyświetlanie aktualnego kursu żeglarskiego (np. 180° oznacza kurs na południe)..
 - Prezentacja prędkości żaglówki.
 - Wizualizacja kierunku wiatru.
 
